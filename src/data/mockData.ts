@@ -1,0 +1,105 @@
+// Mock data for development and demonstration
+export const mockBadges = [
+  {
+    id: 'math-wizard',
+    name: 'Math Wizard',
+    description: 'Completed 10 math lessons',
+    icon: '🧙‍♂️',
+    color: '#3b82f6',
+    earned: true,
+    earnedDate: '2025-01-15',
+  },
+  {
+    id: 'creative-coder',
+    name: 'Creative Coder',
+    description: 'Built your first interactive project',
+    icon: '👨‍💻',
+    color: '#10b981',
+    earned: true,
+    earnedDate: '2025-01-20',
+  },
+  {
+    id: 'science-explorer',
+    name: 'Science Explorer',
+    description: 'Conducted 5 virtual experiments',
+    icon: '🔬',
+    color: '#f59e0b',
+    earned: false,
+    earnedDate: null,
+  },
+  {
+    id: 'reading-champion',
+    name: 'Reading Champion',
+    description: 'Read 20 stories',
+    icon: '📚',
+    color: '#8b5cf6',
+    earned: true,
+    earnedDate: '2025-01-10',
+  },
+  {
+    id: 'streak-master',
+    name: '7-Day Streak Master',
+    description: 'Learned every day for a week',
+    icon: '🔥',
+    color: '#ef4444',
+    earned: true,
+    earnedDate: '2025-01-25',
+  },
+];
+
+export const mockAIRecommendations = [
+  {
+    id: 'rec1',
+    type: 'course',
+    title: 'Advanced Fractions',
+    reason: 'Based on your progress in basic math',
+    confidence: 0.92,
+    thumbnail: 'https://images.pexels.com/photos/8617606/pexels-photo-8617606.jpeg?auto=compress&cs=tinysrgb&w=200',
+  },
+  {
+    id: 'rec2',
+    type: 'activity',
+    title: 'Creative Writing Workshop',
+    reason: 'You excel at storytelling',
+    confidence: 0.87,
+    thumbnail: 'https://images.pexels.com/photos/1370296/pexels-photo-1370296.jpeg?auto=compress&cs=tinysrgb&w=200',
+  },
+  {
+    id: 'rec3',
+    type: 'challenge',
+    title: 'Speed Math Challenge',
+    reason: 'Perfect for your skill level',
+    confidence: 0.79,
+    thumbnail: 'https://images.pexels.com/photos/8617606/pexels-photo-8617606.jpeg?auto=compress&cs=tinysrgb&w=200',
+  },
+];
+
+export const mockTVContent = [
+  {
+    id: 'tv1',
+    title: 'Math Adventures TV',
+    description: 'Interactive math lessons optimized for TV viewing',
+    thumbnail: 'https://images.pexels.com/photos/4709285/pexels-photo-4709285.jpeg?auto=compress&cs=tinysrgb&w=400',
+    duration: '30 min',
+    episodes: 12,
+    category: 'Mathematics',
+  },
+  {
+    id: 'tv2',
+    title: 'Science Lab Live',
+    description: 'Watch and participate in live science experiments',
+    thumbnail: 'https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=400',
+    duration: '45 min',
+    episodes: 8,
+    category: 'Science',
+  },
+  {
+    id: 'tv3',
+    title: 'Creative Coding Show',
+    description: 'Learn programming through entertaining TV format',
+    thumbnail: 'https://images.pexels.com/photos/4709285/pexels-photo-4709285.jpeg?auto=compress&cs=tinysrgb&w=400',
+    duration: '25 min',
+    episodes: 15,
+    category: 'Programming',
+  },
+];
