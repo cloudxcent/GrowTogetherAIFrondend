@@ -61,7 +61,9 @@ export const AITutor: React.FC<AITutorProps> = ({
   const [inputText, setInputText] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [voiceEnabled, setVoiceEnabled] = useState(true);
-  const [settingsAnchor, setSettingsAnchor] = useState<null | HTMLElement>(null);
+  const [settingsAnchor, setSettingsAnchor] = useState<null | HTMLElement>(
+    null
+  );
   const [aiPersonality, setAiPersonality] = useState("friendly");
   const [speechSpeed, setSpeechSpeed] = useState(1);
   const [isTyping, setIsTyping] = useState(false);
@@ -70,12 +72,25 @@ export const AITutor: React.FC<AITutorProps> = ({
   const [aiAPIResponse, setAiAPIResponse] = useState("");
 
   const aiPersonalities = [
-    { value: "friendly", label: "😊 Friendly Maya", description: "Encouraging and supportive" },
-    { value: "professional", label: "🎓 Professor Alex", description: "Formal and academic" },
-    { value: "playful", label: "🎮 Buddy Bot", description: "Fun and game-like" },
+    {
+      value: "friendly",
+      label: "😊 Friendly Maya",
+      description: "Encouraging and supportive",
+    },
+    {
+      value: "professional",
+      label: "🎓 Professor Alex",
+      description: "Formal and academic",
+    },
+    {
+      value: "playful",
+      label: "🎮 Buddy Bot",
+      description: "Fun and game-like",
+    },
   ];
 
-  const scrollToBottom = () => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  const scrollToBottom = () =>
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   useEffect(() => scrollToBottom(), [messages]);
   useEffect(() => {}, [aiAPIResponse]);
 
@@ -166,12 +181,25 @@ export const AITutor: React.FC<AITutorProps> = ({
           color: "white",
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Avatar sx={{ mr: 2, bgcolor: "rgba(255,255,255,0.2)" }}>{getPersonalityAvatar()}</Avatar>
+            <Avatar sx={{ mr: 2, bgcolor: "rgba(255,255,255,0.2)" }}>
+              {getPersonalityAvatar()}
+            </Avatar>
             <Box>
               <Typography variant="h6" fontWeight={600}>
-                AI Tutor - {aiPersonalities.find((p) => p.value === aiPersonality)?.label.split(" ")[1]}
+                AI Tutor -{" "}
+                {
+                  aiPersonalities
+                    .find((p) => p.value === aiPersonality)
+                    ?.label.split(" ")[1]
+                }
               </Typography>
               <Typography variant="body2" sx={{ opacity: 0.9 }}>
                 {subject} • {difficulty} level
@@ -179,10 +207,16 @@ export const AITutor: React.FC<AITutorProps> = ({
             </Box>
           </Box>
           <Box>
-            <IconButton onClick={() => setVoiceEnabled(!voiceEnabled)} sx={{ color: "white", mr: 1 }}>
+            <IconButton
+              onClick={() => setVoiceEnabled(!voiceEnabled)}
+              sx={{ color: "white", mr: 1 }}
+            >
               {voiceEnabled ? <VolumeUp /> : <VolumeOff />}
             </IconButton>
-            <IconButton onClick={(e) => setSettingsAnchor(e.currentTarget)} sx={{ color: "white" }}>
+            <IconButton
+              onClick={(e) => setSettingsAnchor(e.currentTarget)}
+              sx={{ color: "white" }}
+            >
               <Settings />
             </IconButton>
           </Box>
@@ -193,14 +227,27 @@ export const AITutor: React.FC<AITutorProps> = ({
       <Box sx={{ flexGrow: 1, overflow: "auto", p: 2 }}>
         <AnimatePresence>
           {messages.map((message) => (
-            <motion.div key={message.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
-              <Box sx={{ display: "flex", justifyContent: message.sender === "user" ? "flex-end" : "flex-start", mb: 2 }}>
+            <motion.div
+              key={message.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent:
+                    message.sender === "user" ? "flex-end" : "flex-start",
+                  mb: 2,
+                }}
+              >
                 <Box
                   sx={{
                     maxWidth: "70%",
                     p: 2,
                     borderRadius: 2,
-                    backgroundColor: message.sender === "user" ? "primary.main" : "grey.100",
+                    backgroundColor:
+                      message.sender === "user" ? "primary.main" : "grey.100",
                     color: message.sender === "user" ? "white" : "text.primary",
                   }}
                 >
@@ -210,7 +257,12 @@ export const AITutor: React.FC<AITutorProps> = ({
                         {getMessageIcon(message.type)}
                       </Typography>
                       {message.type && message.type !== "text" && (
-                        <Chip label={message.type} size="small" variant="outlined" sx={{ height: 20, fontSize: "0.7rem" }} />
+                        <Chip
+                          label={message.type}
+                          size="small"
+                          variant="outlined"
+                          sx={{ height: 20, fontSize: "0.7rem" }}
+                        />
                       )}
                     </Box>
                   )}
@@ -232,8 +284,18 @@ export const AITutor: React.FC<AITutorProps> = ({
                                 PreTag="div"
                                 wrapLines={true}
                                 // apply block styling to each line so it behaves like <p>
-                                lineProps={{ style: { display: "block", margin: 0, whiteSpace: "pre-wrap" } }}
-                                customStyle={{ padding: "0.5rem", background: "transparent", margin: 0 }}
+                                lineProps={{
+                                  style: {
+                                    display: "block",
+                                    margin: 0,
+                                    whiteSpace: "pre-wrap",
+                                  },
+                                }}
+                                customStyle={{
+                                  padding: "0.5rem",
+                                  background: "transparent",
+                                  margin: 0,
+                                }}
                                 {...props}
                               >
                                 {String(children).replace(/\n$/, "")}
@@ -243,7 +305,18 @@ export const AITutor: React.FC<AITutorProps> = ({
 
                           // inline code: simple <code> as before
                           return (
-                            <code className={className} {...props} style={{ background: "rgba(0,0,0,0.04)", padding: "0.1rem 0.3rem", borderRadius: 4 }}>
+                            <code
+                              className={className}
+                              {...props}
+                              style={{
+                                background: "rgba(0,0,0,0.04)",
+                                padding: "0.1rem 0.3rem",
+                                borderRadius: 4,
+                                display: "block",
+                                margin: 0,
+                                whiteSpace: "pre-wrap",
+                              }}
+                            >
                               {children}
                             </code>
                           );
@@ -263,7 +336,10 @@ export const AITutor: React.FC<AITutorProps> = ({
                       textAlign: message.sender === "user" ? "right" : "left",
                     }}
                   >
-                    {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                    {message.timestamp.toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                   </Typography>
                 </Box>
               </Box>
@@ -272,19 +348,46 @@ export const AITutor: React.FC<AITutorProps> = ({
         </AnimatePresence>
 
         {isTyping && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
             <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
               <Avatar sx={{ width: 32, height: 32, mr: 1 }}>
                 <SmartToy />
               </Avatar>
-              <Box sx={{ p: 2, borderRadius: 2, backgroundColor: "grey.100", display: "flex", alignItems: "center" }}>
+              <Box
+                sx={{
+                  p: 2,
+                  borderRadius: 2,
+                  backgroundColor: "grey.100",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
                 <Typography variant="body2" sx={{ mr: 1 }}>
                   AI is thinking
                 </Typography>
                 <Box sx={{ display: "flex", gap: 0.5 }}>
                   {[0, 1, 2].map((i) => (
-                    <motion.div key={i} animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.2 }}>
-                      <Box sx={{ width: 4, height: 4, borderRadius: "50%", backgroundColor: "primary.main" }} />
+                    <motion.div
+                      key={i}
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{
+                        duration: 0.6,
+                        repeat: Infinity,
+                        delay: i * 0.2,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: 4,
+                          height: 4,
+                          borderRadius: "50%",
+                          backgroundColor: "primary.main",
+                        }}
+                      />
                     </motion.div>
                   ))}
                 </Box>
@@ -329,14 +432,23 @@ export const AITutor: React.FC<AITutorProps> = ({
           >
             {isListening ? <MicOff /> : <Mic />}
           </IconButton>
-          <Button variant="contained" onClick={handleSendMessage} disabled={!inputText.trim()} sx={{ minWidth: "auto", p: 1.5, borderRadius: 3 }}>
+          <Button
+            variant="contained"
+            onClick={handleSendMessage}
+            disabled={!inputText.trim()}
+            sx={{ minWidth: "auto", p: 1.5, borderRadius: 3 }}
+          >
             <Send />
           </Button>
         </Box>
       </Box>
 
       {/* Settings Menu */}
-      <Menu anchorEl={settingsAnchor} open={Boolean(settingsAnchor)} onClose={() => setSettingsAnchor(null)}>
+      <Menu
+        anchorEl={settingsAnchor}
+        open={Boolean(settingsAnchor)}
+        onClose={() => setSettingsAnchor(null)}
+      >
         <Box sx={{ p: 2, minWidth: 250 }}>
           <Typography variant="subtitle2" gutterBottom>
             AI Personality
@@ -363,10 +475,30 @@ export const AITutor: React.FC<AITutorProps> = ({
             <Typography variant="subtitle2" gutterBottom>
               Speech Speed
             </Typography>
-            <Slider value={speechSpeed} onChange={(_, value) => setSpeechSpeed(value as number)} min={0.5} max={2} step={0.1} marks={[{ value: 0.5, label: "Slow" }, { value: 1, label: "Normal" }, { value: 2, label: "Fast" }]} />
+            <Slider
+              value={speechSpeed}
+              onChange={(_, value) => setSpeechSpeed(value as number)}
+              min={0.5}
+              max={2}
+              step={0.1}
+              marks={[
+                { value: 0.5, label: "Slow" },
+                { value: 1, label: "Normal" },
+                { value: 2, label: "Fast" },
+              ]}
+            />
           </Box>
 
-          <FormControlLabel control={<Switch checked={voiceEnabled} onChange={(e) => setVoiceEnabled(e.target.checked)} />} label="Voice Responses" sx={{ mt: 1 }} />
+          <FormControlLabel
+            control={
+              <Switch
+                checked={voiceEnabled}
+                onChange={(e) => setVoiceEnabled(e.target.checked)}
+              />
+            }
+            label="Voice Responses"
+            sx={{ mt: 1 }}
+          />
         </Box>
       </Menu>
     </Card>
