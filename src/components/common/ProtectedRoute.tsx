@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 
@@ -13,16 +13,17 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   roles = [] 
 }) => {
   const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
-  const location = useLocation();
+  // const location = useLocation();
 
-  if (!isAuthenticated) {
+  console.log(isAuthenticated, user);
+  if (!isAuthenticated && user !== null) {
     // Redirect to login page with return url
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to="/login" />;
   }
 
-  if (roles.length > 0 && user && !roles.includes(user.role)) {
+  if (roles.length > 0 && user ) {
     // User doesn't have required role
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/dashboard"  />;
   }
 
   return <>{children}</>;

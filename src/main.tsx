@@ -1,21 +1,26 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
-import './index.css';
-import { PublicClientApplication } from '@azure/msal-browser';
-import { MsalProvider } from '@azure/msal-react';
-import { msalConfig } from './utility/auth.ts';
-const msalInstance = new PublicClientApplication(msalConfig);
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.tsx";
+import { ClerkProvider } from "@clerk/clerk-react";
+import "./index.css";
+import { BrowserRouter } from "react-router-dom";
 
-const rootElement = document.getElementById('root');
+const PUBLISHABLE_KEY = "pk_test_ZnVubnktZG9nLTI5LmNsZXJrLmFjY291bnRzLmRldiQ";
+
+if (!PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key");
+}
+const rootElement = document.getElementById("root");
 if (rootElement) {
   createRoot(rootElement).render(
     <StrictMode>
-      <MsalProvider instance={msalInstance}>
-        <App />
-      </MsalProvider>
+      <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ClerkProvider>
     </StrictMode>
   );
 } else {
-  console.error('Root element not found');
+  console.error("Root element not found");
 }

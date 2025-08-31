@@ -7,7 +7,7 @@ export const msalConfig = {
     auth: {
         clientId: "b3dfa995-5ee7-4d62-842d-0f52f206ae86", // Application (client) ID from Entra ID
         authority: "https://login.microsoftonline.com/chandankcloudxcent.onmicrosoft.com", // Directory (tenant) ID
-        redirectUri: "http://localhost:3000", // Change to your app's redirect URI
+        redirectUri: "http://localhost:5173", // Change to your app's redirect URI
     },
     cache: {
         cacheLocation: "sessionStorage", // or "sessionStorage"
