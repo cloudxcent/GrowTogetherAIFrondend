@@ -22,6 +22,7 @@ import {
   SmartToy as AIIcon,
   Tv as TvIcon,
   EmojiEvents as BadgeIcon,
+  AccountCircle as ProfileIcon,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -37,7 +38,7 @@ const menuItems = [
       { text: 'Dashboard', icon: DashboardIcon, path: '/dashboard', roles: ['parent', 'student', 'admin'] },
       { text: 'Courses', icon: SchoolIcon, path: '/courses', roles: ['parent', 'student', 'admin'] },
       { text: 'Tasks', icon: AssignmentIcon, path: '/tasks', roles: ['parent', 'student', 'admin'] },
-  { text: 'AI Chat and Tutor', icon: AIIcon, path: '/ai-tutor', roles: ['parent', 'student', 'admin'], premium: true },
+      { text: 'AI Tutor', icon: AIIcon, path: '/ai-tutor', roles: ['parent', 'student', 'admin'], premium: true },
     ],
   },
   {
@@ -53,6 +54,7 @@ const menuItems = [
     items: [
       { text: 'Children', icon: PeopleIcon, path: '/children', roles: ['parent', 'admin'] },
       { text: 'Pricing', icon: PaymentIcon, path: '/pricing', roles: ['parent', 'admin'] },
+      { text: 'Profile', icon: ProfileIcon, path: '/profile', roles: ['parent', 'student', 'admin'] },
       { text: 'Settings', icon: SettingsIcon, path: '/settings', roles: ['parent', 'student', 'admin'] },
     ],
   },
@@ -83,44 +85,42 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const isActive = (path: string) => location.pathname === path;
 
   const drawerContent = (
-    <Box sx={{ width: drawerWidth, pt: 4 }}>
-      {/* Company Logo at the top */}
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
-        <Box
-          sx={{
-            width: 64,
-            height: 64,
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '2.5rem',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.10)',
-            mb: 1,
-          }}
+    <Box sx={{ width: { xs: '80vw', sm: '260px' }, maxWidth: drawerWidth, pt: { xs: 7, md: 8 }, px: { xs: 1, sm: 0 } }}>
+      {/* User Info */}
+      <Box sx={{ position: 'relative', bottom: 16, left: 0, right: 0, px: { xs: 1, sm: 2 } }}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.5 }}
         >
-          <span role="img" aria-label="logo">🤖</span>
-        </Box>
-        <Typography variant="h6" sx={{ fontWeight: 700, color: 'primary.main', letterSpacing: 1 }}>
-          GrowTogether AI
-        </Typography>
-      </Box>
-      {/* User Info (single line, above menu) */}
-  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 1, gap: 1 }}>
-        <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
-          Logged in as
-        </Typography>
-        <Typography variant="body2" fontWeight={600} noWrap sx={{ maxWidth: 100 }}>
-          {user?.name}
-        </Typography>
-        <Chip
-          label={user?.role?.toUpperCase()}
-          size="small"
-          color="primary"
-          variant="outlined"
-          sx={{ fontSize: '0.7rem', height: 20 }}
-        />
+          <Box
+            sx={{
+              p: { xs: 1, sm: 2 },
+              borderRadius: 2,
+              backgroundColor: 'background.paper',
+              border: 1,
+              borderColor: 'divider',
+              display: 'flex',
+              flexDirection: { xs: 'column', sm: 'column' },
+              alignItems: { xs: 'flex-start', sm: 'flex-start' },
+              gap: 0.5,
+            }}
+          >
+            <Typography variant="caption" color="text.secondary">
+              Logged in as
+            </Typography>
+            <Typography variant="body2" fontWeight={600} noWrap sx={{ fontSize: { xs: '0.95rem', sm: '1rem' } }}>
+              {user?.name}
+            </Typography>
+            <Chip
+              label={user?.role?.toUpperCase()}
+              size="small"
+              color="primary"
+              variant="outlined"
+              sx={{ mt: 1, fontSize: { xs: '0.7rem', sm: '0.8rem' } }}
+            />
+          </Box>
+        </motion.div>
       </Box>
       {menuItems.map((section, sectionIndex) => (
         <motion.div
@@ -133,7 +133,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             variant="overline"
             sx={{
               px: 2,
-              py: 0.5,
+              py: 1,
               display: 'block',
               color: 'text.secondary',
               fontWeight: 600,
@@ -142,21 +142,23 @@ export const Sidebar: React.FC<SidebarProps> = ({
           >
             {section.section}
           </Typography>
-          <List sx={{ px: 1, py: 0 }}>
+          
+          <List sx={{ px: 1 }}>
             {section.items
               .filter(item => item.roles.includes(user?.role || 'student'))
               .map((item) => {
                 const Icon = item.icon;
                 const active = isActive(item.path);
+                
                 return (
-                  <ListItem key={item.text} disablePadding sx={{ minHeight: 36 }}>
+                  <ListItem key={item.text} disablePadding>
                     <ListItemButton
                       onClick={() => handleNavigation(item.path)}
                       sx={{
+                        wordBreak: 'break-all',
                         borderRadius: 2,
-                        mb: 0.2,
+                        mb: 0.5,
                         mx: 1,
-                        minHeight: 36,
                         backgroundColor: active ? 'primary.main' : 'transparent',
                         color: active ? 'primary.contrastText' : 'text.primary',
                         '&:hover': {
@@ -168,7 +170,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       <ListItemIcon
                         sx={{
                           color: active ? 'primary.contrastText' : 'primary.main',
-                          minWidth: 36,
+                          minWidth: 40,
                         }}
                       >
                         <Icon />
@@ -178,7 +180,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         sx={{
                           '& .MuiListItemText-primary': {
                             fontWeight: active ? 600 : 500,
-                            fontSize: '0.97rem',
                           },
                         }}
                       />
@@ -188,7 +189,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           size="small"
                           color="secondary"
                           sx={{
-                            height: 18,
+                            height: 20,
                             fontSize: '0.7rem',
                             fontWeight: 600,
                           }}
@@ -199,8 +200,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 );
               })}
           </List>
+          
           {sectionIndex < menuItems.length - 1 && (
-            <Divider sx={{ my: 0.5, mx: 2 }} />
+            <Divider sx={{ my: 1, mx: 2 }} />
           )}
         </motion.div>
       ))}
@@ -215,10 +217,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
       open={open}
       onClose={onClose}
       sx={{
-        width: drawerWidth,
+        width: { xs: '80vw', sm: '280px' },
         flexShrink: 0,
         '& .MuiDrawer-paper': {
-          width: drawerWidth,
+          width: { xs: '80vw', sm: drawerWidth },
+          maxWidth: drawerWidth,
           boxSizing: 'border-box',
           borderRight: 1,
           borderColor: 'divider',

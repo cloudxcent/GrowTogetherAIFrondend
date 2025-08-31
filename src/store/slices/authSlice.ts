@@ -9,19 +9,10 @@ interface AuthState {
   error: string | null;
 }
 
-// Load persisted auth state from localStorage
-const persistedAuth = (() => {
-  try {
-    const data = localStorage.getItem('auth');
-    if (data) return JSON.parse(data);
-  } catch {}
-  return null;
-})();
-
 const initialState: AuthState = {
-  user: persistedAuth?.user || null,
+  user: null,
   children: [],
-  isAuthenticated: persistedAuth?.isAuthenticated || false,
+  isAuthenticated: false,
   loading: false,
   error: null,
 };
@@ -39,14 +30,11 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.loading = false;
       state.error = null;
-      // Persist to localStorage
-      localStorage.setItem('auth', JSON.stringify({ user: state.user, isAuthenticated: true }));
     },
     loginFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.error = action.payload;
       state.isAuthenticated = false;
-      localStorage.removeItem('auth');
     },
     logout: (state) => {
       state.user = null;
@@ -54,7 +42,6 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.loading = false;
       state.error = null;
-      localStorage.removeItem('auth');
     },
     setChildren: (state, action: PayloadAction<Child[]>) => {
       state.children = action.payload;

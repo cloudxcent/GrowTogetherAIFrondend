@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { ThemeProvider } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { store, RootState } from './store';
@@ -9,10 +9,8 @@ import { lightTheme, darkTheme } from './theme';
 import { Layout } from './components/layout/Layout';
 import { ProtectedRoute } from './components/common/ProtectedRoute';
 import { LoginForm } from './components/auth/LoginForm';
-import HomePage from './pages/HomePage';
+import { HomePage } from './pages/HomePage';
 import { DashboardPage } from './pages/DashboardPage';
-import { WelcomePage } from './pages/WelcomePage';
-import { AuthRedirect } from './components/common/AuthRedirect';
 import { CoursesPage } from './pages/CoursesPage';
 import { PricingPage } from './pages/PricingPage';
 import { AITutorPage } from './pages/AITutorPage';
@@ -21,6 +19,8 @@ import { AchievementsPage } from './pages/AchievementsPage';
 import { ChildrenPage } from './pages/ChildrenPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
 import { TasksPage } from './pages/TasksPage';
+import { SettingsPage } from './pages/SettingsPage';
+import { ProfilePage } from './pages/ProfilePage';
 
 const ThemedApp: React.FC = () => {
   const { mode } = useSelector((state: RootState) => state.theme);
@@ -43,15 +43,6 @@ const ThemedApp: React.FC = () => {
               element={
                 <ProtectedRoute>
                   <DashboardPage />
-                </ProtectedRoute>
-              }
-            />
-            {/* Default route for authenticated users */}
-            <Route
-              path="/welcome"
-              element={
-                <ProtectedRoute>
-                  <WelcomePage />
                 </ProtectedRoute>
               }
             />
@@ -119,18 +110,26 @@ const ThemedApp: React.FC = () => {
               path="/settings"
               element={
                 <ProtectedRoute>
-                  <div>Settings Page - Coming Soon</div>
+                  <SettingsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
                 </ProtectedRoute>
               }
             />
 
-            {/* Redirect root to /welcome if authenticated, else HomePage */}
-            <Route
-              path="*"
-              element={
-                <AuthRedirect />
-              }
-            />
+            {/* Catch all route */}
+            <Route path="*" element={
+              <div style={{ padding: '2rem', textAlign: 'center' }}>
+                <h2>404 - Page Not Found</h2>
+                <p>The page you're looking for doesn't exist.</p>
+              </div>
+            } />
           </Routes>
         </Layout>
       </Router>

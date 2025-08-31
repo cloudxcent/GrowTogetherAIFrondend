@@ -36,7 +36,6 @@ import { RootState } from '../store';
 import { useGetTasksQuery } from '../store/api/coursesApi';
 import { useGetUserAnalyticsQuery } from '../store/api/analyticsApi';
 import { useGetChildrenQuery } from '../store/api/authApi';
-import { Hero } from '../components/common/Hero';
 import { mockBadges, mockAIRecommendations } from '../data/mockData';
 
 const StatCard: React.FC<{
@@ -92,7 +91,6 @@ const StatCard: React.FC<{
 
 export const DashboardPage: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.auth);
-
   
   // Mock user ID for demo
   const userId = user?.role === 'parent' ? 'child1' : user?.id || 'child1';
@@ -136,13 +134,24 @@ export const DashboardPage: React.FC = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Hero
-        headline={`Welcome back, ${user?.name}! 👋`}
-        subheadline={user?.role === 'parent'
-          ? "Here's what your children have been learning today"
-          : "Ready to continue your learning journey?"
-        }
-      />
+      {/* Welcome Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h4" fontWeight={700} gutterBottom>
+            Welcome back, {user?.name}! 👋
+          </Typography>
+          <Typography variant="h6" color="text.secondary">
+            {user?.role === 'parent' 
+              ? "Here's what your children have been learning today"
+              : "Ready to continue your learning journey?"
+            }
+          </Typography>
+        </Box>
+      </motion.div>
 
       {/* Stats Cards */}
       <Grid container spacing={3} sx={{ mb: 4 }}>

@@ -23,7 +23,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     return (
       <Box sx={{ minHeight: '100vh', backgroundColor: 'background.default' }}>
         <Header />
-        <Box sx={{ pt: 8 }}>
+        <Box component="main" sx={{ pt: { xs: 7, md: 8 }, px: { xs: 1, sm: 2, md: 4 } }}>
           {children}
         </Box>
       </Box>
@@ -31,9 +31,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   }
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh', backgroundColor: 'background.default' }}>
+    <Box sx={{ display: 'flex', minHeight: '100vh', backgroundColor: 'background.default', width: '100%' }}>
       <Header onMenuClick={handleSidebarToggle} />
-      
+
       {/* Sidebar */}
       {isMobile ? (
         <Sidebar
@@ -54,13 +54,16 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         component="main"
         sx={{
           flexGrow: 1,
-          pt: 8,
+          pt: { xs: 7, md: 8 },
           pl: isMobile ? 0 : '280px',
           minHeight: '100vh',
           backgroundColor: 'background.default',
+          width: '100%',
+          transition: 'padding-left 0.3s',
+          paddingLeft: isMobile ? 0 : '8px',
         }}
       >
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: { xs: 1, sm: 2, md: 3 }, width: '100%' }}>
           {children}
         </Box>
       </Box>

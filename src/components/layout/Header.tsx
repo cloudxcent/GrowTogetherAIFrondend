@@ -36,11 +36,9 @@ const Search = styled('div')(({ theme }) => ({
   },
   marginLeft: 0,
   width: '100%',
-  maxWidth: 400,
   [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(2),
-    width: 350,
-    maxWidth: 500,
+    marginLeft: theme.spacing(1),
+    width: 'auto',
   },
 }));
 
@@ -57,15 +55,14 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
-    padding: theme.spacing(1.2, 1, 1.2, 0),
+    padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    fontSize: '1.1rem',
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      width: '24ch',
+      width: '12ch',
       '&:focus': {
-        width: '32ch',
+        width: '20ch',
       },
     },
   },
@@ -125,15 +122,16 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
         borderColor: 'divider',
       }}
     >
-      <Toolbar>
+      <Toolbar sx={{ px: { xs: 1, sm: 2, md: 4 }, minHeight: { xs: 56, sm: 64 } }}>
         <Logo
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3 }}
           onClick={() => window.location.href = '/'}
+          style={{ minWidth: 0 }}
         >
-          <div className="logo-icon">🤖</div>
-          <Typography variant="h6" component="div" sx={{ fontWeight: 700, color: 'inherit' }}>
+          <div className="logo-icon text-lg md:text-2xl">🤖</div>
+          <Typography variant="h6" component="div" sx={{ fontWeight: 700, color: 'inherit', fontSize: { xs: '1.1rem', sm: '1.25rem', md: '1.5rem' } }}>
             GrowTogether AI
           </Typography>
         </Logo>
@@ -141,20 +139,22 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
         <Box sx={{ flexGrow: 1 }} />
 
         {/* AI-Powered Search */}
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="AI Search courses, tasks..."
-            inputProps={{ 'aria-label': 'search' }}
-          />
-        </Search>
+        <Box sx={{ minWidth: { xs: 120, sm: 200, md: 250 }, mx: { xs: 1, sm: 2 } }}>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="AI Search courses, tasks..."
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
+        </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', ml: { xs: 1, sm: 2 } }}>
           {/* Theme Toggle */}
           <Tooltip title={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}>
-            <IconButton onClick={handleThemeToggle} color="inherit">
+            <IconButton onClick={handleThemeToggle} color="inherit" size="large">
               {mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
             </IconButton>
           </Tooltip>
@@ -163,7 +163,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
             <>
               {/* Notifications */}
               <Tooltip title="Notifications">
-                <IconButton color="inherit">
+                <IconButton color="inherit" size="large">
                   <Badge badgeContent={3} color="error">
                     <NotificationsIcon />
                   </Badge>
@@ -176,11 +176,12 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
                   onClick={handleProfileMenuOpen}
                   color="inherit"
                   sx={{ ml: 1 }}
+                  size="large"
                 >
                   {user?.avatar ? (
-                    <Avatar src={user.avatar} sx={{ width: 32, height: 32 }} />
+                    <Avatar src={user.avatar} sx={{ width: { xs: 28, sm: 32 }, height: { xs: 28, sm: 32 } }} />
                   ) : (
-                    <AccountCircle />
+                    <AccountCircle sx={{ fontSize: { xs: 28, sm: 32 } }} />
                   )}
                 </IconButton>
               </Tooltip>
@@ -196,9 +197,9 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+          <MenuItem onClick={() => { handleMenuClose(); window.location.href = '/profile'; }}>Profile</MenuItem>
           <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Parental Controls</MenuItem>
+          <MenuItem onClick={() => { handleMenuClose(); window.location.href = '/children'; }}>Parental Controls</MenuItem>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       </Toolbar>

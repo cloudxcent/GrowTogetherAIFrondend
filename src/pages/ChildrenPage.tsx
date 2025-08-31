@@ -37,7 +37,7 @@ import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { useGetChildrenQuery } from '../store/api/authApi';
-import { ParentalControls } from '../components/features/ParentalControls';
+import { EnhancedParentalControls } from '../components/features/EnhancedParentalControls';
 import { Child } from '../types';
 
 export const ChildrenPage: React.FC = () => {
@@ -341,7 +341,7 @@ export const ChildrenPage: React.FC = () => {
       >
         <DialogContent sx={{ p: 0 }}>
           {selectedChild && (
-            <ParentalControls
+            <EnhancedParentalControls
               childId={selectedChild.id}
               childName={selectedChild.name}
               controls={selectedChild.restrictions}
